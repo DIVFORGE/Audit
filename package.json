@@ -1,0 +1,127 @@
+{
+  "name": "audit",
+  "displayName": "Audit — Code Attribution Tracker",
+  "description": "Automatically records who — developer or which AI tool — wrote or changed each line, file, and structural change in your project, stored locally as readable markdown.",
+  "version": "0.1.0",
+  "publisher": "vaibhavbthakare",
+  "license": "MIT",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DIVFORGE/Audit.git"
+  },
+  "keywords": ["ai", "copilot", "claude", "codex", "audit", "attribution", "tracking", "accountability"],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "audit.openLog",
+        "title": "Audit: Open Today's Log"
+      },
+      {
+        "command": "audit.openLogFolder",
+        "title": "Audit: Open Log Folder"
+      },
+      {
+        "command": "audit.toggle",
+        "title": "Audit: Toggle Tracking On/Off"
+      },
+      {
+        "command": "audit.setDeveloperName",
+        "title": "Audit: Set Developer Name"
+      },
+      {
+        "command": "audit.correctLastEntry",
+        "title": "Audit: Correct Last Entry Attribution"
+      },
+      {
+        "command": "audit.addSummaryToCommit",
+        "title": "Audit: Add Today's Summary to Commit Message"
+      },
+      {
+        "command": "audit.addReasonToLastEntry",
+        "title": "Audit: Add Reason to Last Entry"
+      },
+      {
+        "command": "audit.openDashboard",
+        "title": "Audit: Open Dashboard"
+      },
+      {
+        "command": "audit.exportCsv",
+        "title": "Audit: Export Log to CSV"
+      }
+    ],
+    "configuration": {
+      "title": "Audit",
+      "properties": {
+        "audit.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic change tracking."
+        },
+        "audit.developerName": {
+          "type": "string",
+          "default": "",
+          "description": "Name to attribute manual edits to. Prompted on first run if empty."
+        },
+        "audit.logFolder": {
+          "type": "string",
+          "default": ".audit",
+          "description": "Folder (relative to workspace root) where markdown logs are stored."
+        },
+        "audit.minLinesForAIHeuristic": {
+          "type": "number",
+          "default": 2,
+          "description": "Minimum lines inserted in a single edit event before it's considered a possible AI-tool insertion rather than manual typing."
+        },
+        "audit.preferredAITool": {
+          "type": "string",
+          "default": "",
+          "description": "If you only ever use ONE AI tool in this workspace, set its name here (e.g. 'Claude Code') to get exact attribution instead of a 'possibly: X / Y / Z' guess when multiple AI extensions are installed and active. Leave empty for automatic (ambiguous) detection."
+        },
+        "audit.excludeDesignChangeForTestFiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Skip the Design-Change flag for .spec./.test. files, where routine import/signature edits are normal boilerplate rather than real architecture changes."
+        },
+        "audit.ignoreBlankLineChanges": {
+          "type": "boolean",
+          "default": true,
+          "description": "Don't log edits that only add or remove blank/whitespace lines — no real code changed."
+        },
+        "audit.ignoreCommentOnlyChanges": {
+          "type": "boolean",
+          "default": true,
+          "description": "Don't log edits where every affected line (added and removed) is a comment — no functional code changed."
+        },
+        "audit.tagGitBranch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Tag each log entry with the current git branch name, when a git repository is open."
+        },
+        "audit.protectLogFromExternalChanges": {
+          "type": "boolean",
+          "default": true,
+          "description": "Watch the log files for deletion or truncation by any process (including AI agents with file-write access) and automatically restore them from the last known good state."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  }
+}

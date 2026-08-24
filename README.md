@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Audit — Code Attribution Tracker
 
 Know exactly who — or which AI — wrote every line in your codebase.
@@ -191,3 +192,7 @@ git-native by design — no extra infrastructure to run.
 - Hook Copilot/Claude Code's own accept-suggestion commands directly (where exposed)
   for higher-confidence attribution instead of the timing heuristic.
 - Per-file summary rollup (`.audit/summary.md`) showing % AI vs manual by file.
+=======
+# Audit
+Automatically records who — developer or which AI tool — wrote or changed each line, file, and structural change in your project, stored locally as readable markdown.
+>>>>>>> 6a477489a26648ae6f01a338134f6871db9b9258
